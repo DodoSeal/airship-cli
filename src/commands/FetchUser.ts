@@ -1,9 +1,11 @@
 import type { CLICommand } from "./CommandTypes.js";
 import { input, select, confirm } from '@inquirer/prompts';
-import { PrintHeader, PrintError, PrintTitle } from '../util/Styles.js';
+import { PrintError, PrintHeader, PrintTitle } from '../util/Styles.js';
 import { AirshipToken } from '../util/TokenManager.js';
 import type { AirshipUser, AirshipError } from "../AirshipTypes.js";
 import { RestartTool, StartTool } from "../cli.js";
+import chalk from "chalk";
+import { setTimeout } from "node:timers/promises";
 
 const apiMap = {
     "Username": "https://api.airship.gg/game-coordinator/users/user?username=",
@@ -17,12 +19,18 @@ export const fetchUserCommand: CLICommand = {
     usage: "fetch-user <method: username | userId> <identifier: string>",
     requiresToken: false,
     execute: async () => {
+        console.clear();
+        PrintHeader("Fetch User");
+
+        await setTimeout(250);
+
         const fetchMethod = await select({ message: "Which method would you like to use?", choices: [
             "Username",
             "UserId"
         ]});
 
         const userIdentifier = await input({ message: `Please enter the ${fetchMethod}:` });
+        const dataType = await select({ message: "How would you like your data?", choices: [ "Simple", "Verbose" ] });
 
         for (let data of Object.entries(apiMap)) {
             const method = data[0];
@@ -42,7 +50,18 @@ export const fetchUserCommand: CLICommand = {
 
                     if ("error" in result || keys.length === 0) return;
 
-                    console.dir(result, { depth: null });
+                    switch(dataType) {
+                        case "Simple":
+                            const userData = (result as AirshipUser).user;
+
+                            console.log(`\n${chalk.green("User Id")}: ${userData.uid}`);
+                            console.log(`${chalk.green("Username")}: ${userData.username}`);
+                            console.log(`${chalk.green("Status Text")}: ${userData.statusText || ""}\n`);
+                            break;
+                        case "Verbose":
+                            console.dir(result, { depth: null });
+                            break;
+                    };
                 })).catch((err) => {
                     PrintError(err);
                 });

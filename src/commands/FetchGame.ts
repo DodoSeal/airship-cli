@@ -4,6 +4,8 @@ import { PrintHeader, PrintError, PrintTitle } from '../util/Styles.js';
 import { AirshipToken } from '../util/TokenManager.js';
 import type { AirshipError, AirshipGame } from "../AirshipTypes.js";
 import { RestartTool, StartTool } from "../cli.js";
+import { setTimeout } from "node:timers/promises";
+import chalk from "chalk";
 
 const apiMap = {
     "Slug": "https://api.airship.gg/content/games/slug/",
@@ -17,12 +19,18 @@ export const fetchGameCommand: CLICommand = {
     usage: "fetch-game <method: slug | gameId> <identifier: string>",
     requiresToken: false,
     execute: async () => {
+        console.clear();
+        PrintHeader("Fetch Game");
+
+        await setTimeout(250);
+
         const fetchMethod = await select({ message: "Which method would you like to use?", choices: [
             "Slug",
             "GameId"
         ]});
 
         const gameIdentifier = await input({ message: `Please enter the ${fetchMethod}:` });
+        const dataType = await select({ message: "How would you like your data?", choices: [ "Simple", "Verbose" ] });
 
         for (let data of Object.entries(apiMap)) {
             const method = data[0];
@@ -42,7 +50,20 @@ export const fetchGameCommand: CLICommand = {
 
                     if ((result as AirshipError)["error"]) return;
 
-                    console.dir(result, { depth: null });
+                    switch(dataType) {
+                        case "Simple":
+                            const userData = (result as AirshipGame).game;
+
+                            console.log(`\n${chalk.green("Game Id")}: ${userData.id}`);
+                            console.log(`${chalk.green("Name")}: ${userData.name}`);
+                            console.log(`${chalk.green("Slug")}: ${userData.slug || ""}`);
+                            console.log(`${chalk.green("Developer")}: ${userData.organization.name}`);
+                            console.log(`${chalk.green("Description")}: ${userData.description || ""}\n`);
+                            break;
+                        case "Verbose":
+                            console.dir(result, { depth: null });
+                            break;
+                    };
                 })).catch((err) => {
                     PrintError(err);
                 });
