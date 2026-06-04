@@ -44,11 +44,10 @@ export const fetchUserCommand: CLICommand = {
                     const keys = Object.keys(result);
                     const entries = Object.entries(result);
 
-                    if (entries.length === 0) {
+                    if (entries.length === 0 || "error" in result || keys.length === 0) {
                         PrintError(`Invalid ${fetchMethod}!`);
+                        return;
                     };
-
-                    if ("error" in result || keys.length === 0) return;
 
                     switch(dataType) {
                         case "Simple":
@@ -60,6 +59,7 @@ export const fetchUserCommand: CLICommand = {
                             break;
                         case "Verbose":
                             console.dir(result, { depth: null });
+                            console.log();
                             break;
                     };
                 })).catch((err) => {

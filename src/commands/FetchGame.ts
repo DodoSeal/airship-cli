@@ -41,14 +41,13 @@ export const fetchGameCommand: CLICommand = {
                     method: "GET"
                 }).then(raw => raw.text().then(data => {
                     const result = JSON.parse(data) as AirshipGame | AirshipError | {};
+                    const keys = Object.keys(result);
                     const entries = Object.entries(result);
 
-                    if (entries.length === 0) {
+                    if (entries.length === 0 || "error" in result || keys.length === 0) {
                         PrintError(`Invalid ${fetchMethod}!`);
                         return;
                     };
-
-                    if ((result as AirshipError)["error"]) return;
 
                     switch(dataType) {
                         case "Simple":
@@ -62,6 +61,7 @@ export const fetchGameCommand: CLICommand = {
                             break;
                         case "Verbose":
                             console.dir(result, { depth: null });
+                            console.log();
                             break;
                     };
                 })).catch((err) => {
