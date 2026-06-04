@@ -8,7 +8,6 @@
   },
   "type": "module",
   "scripts": {
-    "test": "echo \"No test specified\"",
     "tsc": "tsc --w"
   },
   "author": "Max McDaniel",
