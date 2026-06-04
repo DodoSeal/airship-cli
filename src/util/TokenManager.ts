@@ -4,15 +4,17 @@ import { PrintError } from './Styles.js';
 
 const airshipAccountPath = process.env.APPDATA + `../../LocalLow/Easy/Airship/account.json`;
 
-function FetchAirshipToken(): string {
-    const accountsFile = fs.readFileSync(airshipAccountPath);
-    if (!accountsFile) {
+function FetchAirshipToken(): string | undefined {
+    let jsonData: AccountInfo;
+
+    try {
+        const accountsFile = fs.readFileSync(airshipAccountPath);
+        
+        jsonData = JSON.parse(accountsFile.toString("utf8"));
+    } catch(err) {
         PrintError("No Airship Installation Found!");
-
-        process.exit(1);
+        return undefined;
     };
-
-    const jsonData: AccountInfo = JSON.parse(accountsFile.toString("utf8"));
 
     return jsonData.refreshToken;
 };
