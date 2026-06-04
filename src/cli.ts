@@ -27,22 +27,30 @@ export function StartTool() {
     }, 250);
 };
 
-StartTool();
-
 async function PromptCommand() {
-    const answer = await select({ message: "What would you like to do?", choices: commandList});
+    try {
+        const answer = await select({ message: "What would you like to do?", choices: commandList});
 
-    for (let command of Object.entries(commandMap)) {
-        const cmdName = command[0];
-        const cmdFunction = command[1];
+        for (let command of Object.entries(commandMap)) {
+            const cmdName = command[0];
+            const cmdFunction = command[1];
 
-        if (answer === cmdName) {
-            PrintTitle();
+            if (answer === cmdName) {
+                PrintTitle();
 
-            setTimeout(() => {
-                cmdFunction.execute();
-            }, 250);
-            return;
+                setTimeout(() => {
+                    cmdFunction.execute();
+                }, 250);
+                return;
+            };
         };
+    } catch(err) {
+        process.exit(0);
     };
 };
+
+process.on("exit", (signal) => {
+    console.clear();
+});
+
+StartTool();
