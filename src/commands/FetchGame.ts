@@ -41,7 +41,7 @@ export const fetchGameCommand: CLICommand = {
                         // PrintError(styledError);
                     };
 
-                    console.log(gameData);
+                    console.dir(gameData, { depth: null });
                 })).catch((err) => {
                     PrintError(err);
                 });

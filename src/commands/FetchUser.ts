@@ -41,7 +41,7 @@ export const fetchUserCommand: CLICommand = {
                         PrintError(styledError);
                     };
 
-                    console.log(userData);
+                    console.dir(userData, { depth: null });
                 })).catch((err) => {
                     PrintError(err);
                 });

@@ -3,8 +3,7 @@
 import { input, select } from '@inquirer/prompts';
 import { PrintHeader, PrintError, PrintTitle } from './util/Styles.js';
 import { AirshipToken } from './util/TokenManager.js';
-import { isInt16Array } from 'node:util/types';
-import { helpCommand } from './commands/help.js';
+import { helpCommand } from './commands/Help.js';
 import { fetchUserCommand } from './commands/FetchUser.js';
 import { fetchGameCommand } from './commands/FetchGame.js';
 
