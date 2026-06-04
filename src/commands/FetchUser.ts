@@ -2,7 +2,7 @@ import type { CLICommand } from "./CommandTypes.js";
 import { input, select, confirm } from '@inquirer/prompts';
 import { PrintHeader, PrintError, PrintTitle } from '../util/Styles.js';
 import { AirshipToken } from '../util/TokenManager.js';
-import type { AirshipUser, AirshipUserError } from "../AirshipTypes.js";
+import type { AirshipUser, AirshipError } from "../AirshipTypes.js";
 import { RestartTool, StartTool } from "../cli.js";
 
 const apiMap = {
@@ -31,17 +31,17 @@ export const fetchUserCommand: CLICommand = {
                 fetch(url + userIdentifier, {
                     method: "GET"
                 }).then(raw => raw.text().then(data => {
-                    const userData = JSON.parse(data) as AirshipUser | AirshipUserError | {};
-                    const entries = Object.entries(userData);
+                    const result = JSON.parse(data) as AirshipUser | AirshipError | {};
+                    const keys = Object.keys(result);
+                    const entries = Object.entries(result);
 
                     if (entries.length === 0) {
                         PrintError(`Invalid ${fetchMethod}!`);
-                    } else if (entries.length === 3) {
-                        const styledError = `${entries[0]?.[1]}`.replaceAll("username", "Username").replaceAll(",", ", ");
-                        PrintError(styledError);
                     };
 
-                    console.dir(userData, { depth: null });
+                    if ("error" in result || keys.length === 0) return;
+
+                    console.dir(result, { depth: null });
                 })).catch((err) => {
                     PrintError(err);
                 });

@@ -14,7 +14,7 @@ export type AirshipUser = {
     }
 };
 
-export type AirshipUserError = {
+export type AirshipError = {
     message: string[],
     error: string,
     statusCode: number

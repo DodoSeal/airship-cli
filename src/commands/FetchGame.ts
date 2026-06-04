@@ -2,7 +2,7 @@ import type { CLICommand } from "./CommandTypes.js";
 import { input, select, confirm } from '@inquirer/prompts';
 import { PrintHeader, PrintError, PrintTitle } from '../util/Styles.js';
 import { AirshipToken } from '../util/TokenManager.js';
-import type { AirshipGame } from "../AirshipTypes.js";
+import type { AirshipError, AirshipGame } from "../AirshipTypes.js";
 import { RestartTool, StartTool } from "../cli.js";
 
 const apiMap = {
@@ -31,17 +31,17 @@ export const fetchGameCommand: CLICommand = {
                 fetch(url + gameIdentifier, {
                     method: "GET"
                 }).then(raw => raw.text().then(data => {
-                    const gameData = JSON.parse(data) as AirshipGame | {};
-                    const entries = Object.entries(gameData);
+                    const result = JSON.parse(data) as AirshipGame | AirshipError | {};
+                    const entries = Object.entries(result);
 
                     if (entries.length === 0) {
                         PrintError(`Invalid ${fetchMethod}!`);
-                    } else if (entries.length === 3) {
-                        // const styledError = `${entries[0]?.[1]}`.replaceAll("username", "Username").replaceAll(",", ", ");
-                        // PrintError(styledError);
+                        return;
                     };
 
-                    console.dir(gameData, { depth: null });
+                    if ((result as AirshipError)["error"]) return;
+
+                    console.dir(result, { depth: null });
                 })).catch((err) => {
                     PrintError(err);
                 });
