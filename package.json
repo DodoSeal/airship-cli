@@ -6,7 +6,9 @@
   "bin": {
     "airship": "out/cli.js"
   },
-  "files": [ "out/" ],
+  "files": [
+    "out/"
+  ],
   "type": "module",
   "scripts": {
     "tsc": "tsc --w"
