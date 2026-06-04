@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { input, select } from '@inquirer/prompts';
+import { confirm, input, select } from '@inquirer/prompts';
 import { PrintHeader, PrintError, PrintTitle } from './util/Styles.js';
 import { AirshipToken } from './util/TokenManager.js';
 import { helpCommand } from './commands/Help.js';
@@ -25,6 +25,16 @@ export function StartTool() {
     setTimeout(() => {
         PromptCommand();
     }, 250);
+};
+
+export async function RestartTool() {
+    setTimeout(async () => {
+        const restartTool = await confirm({ message: "Would you like to anything else?" });
+
+        if (restartTool) {
+            StartTool();
+        };
+    }, 1000);
 };
 
 async function PromptCommand() {

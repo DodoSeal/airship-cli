@@ -3,7 +3,7 @@ import { input, select, confirm } from '@inquirer/prompts';
 import { PrintHeader, PrintError, PrintTitle } from '../util/Styles.js';
 import { AirshipToken } from '../util/TokenManager.js';
 import type { AirshipUser, AirshipUserError } from "../AirshipTypes.js";
-import { StartTool } from "../cli.js";
+import { RestartTool, StartTool } from "../cli.js";
 
 const apiMap = {
     "Username": "https://api.airship.gg/game-coordinator/users/user?username=",
@@ -46,13 +46,7 @@ export const fetchUserCommand: CLICommand = {
                     PrintError(err);
                 });
 
-                setTimeout(async () => {
-                    const restartTool = await confirm({ message: "Would you like to anything else?" });
-
-                    if (restartTool) {
-                        StartTool();
-                    };
-                }, 1000);
+                RestartTool();
 
                 return;
             };
