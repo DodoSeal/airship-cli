@@ -40,10 +40,14 @@ async function PromptCommand() {
 
         for (let command of Object.entries(commandMap)) {
             const cmdName = command[0];
+            const requiresToken = command[1].requiresToken;
             const cmdFunction = command[1];
 
             if (answer === cmdName) {
-                PrintTitle();
+                if (AirshipToken === undefined && requiresToken) {
+                    PrintError("An authenticated Airship installation is required to run this command!");
+                    process.exit(1);
+                };
 
                 await setTimeout(250);
                 cmdFunction.execute();
@@ -56,7 +60,9 @@ async function PromptCommand() {
 };
 
 process.on("exit", (signal) => {
-    console.clear();
+    if (signal === 0) {
+        console.clear();
+    };
 });
 
 StartTool();
