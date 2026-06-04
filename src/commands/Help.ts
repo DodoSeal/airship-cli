@@ -3,15 +3,16 @@ import chalk from "chalk";
 import { input, select, confirm } from '@inquirer/prompts';
 import { PrintHeader, PrintError, PrintTitle } from '../util/Styles.js';
 import { AirshipToken } from '../util/TokenManager.js';
-import { commandMap, commandList, StartTool } from "../cli.js";
+import { commandMap, StartTool } from "../cli.js";
 
 export const helpCommand: CLICommand = {
     name: "help",
+    displayName: "Help",
     description: "Returns the usage of a command.",
     usage: "help <command: string>",
     requiresToken: false,
     execute: async () => {
-        const commandSelect = await select({ message: "Which command do you need help with?", choices: commandList.slice(1) });
+        const commandSelect = await select({ message: "Which command do you need help with?", choices: Object.keys(commandMap).slice(1) });
 
         for (let command of Object.entries(commandMap)) {
             if (command[0] === commandSelect) {

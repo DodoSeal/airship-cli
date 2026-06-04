@@ -6,6 +6,7 @@ import { AirshipToken } from './util/TokenManager.js';
 import { helpCommand } from './commands/Help.js';
 import { fetchUserCommand } from './commands/FetchUser.js';
 import { fetchGameCommand } from './commands/FetchGame.js';
+import { setTimeout } from 'node:timers/promises';
 
 export const commandMap = {
     "Help": helpCommand,
@@ -13,33 +14,29 @@ export const commandMap = {
     "Fetch Game": fetchGameCommand
 };
 
-export const commandList = [
-    "Help",
-    "Fetch User",
-    "Fetch Game"
-];
-
-export function StartTool() {
+export async function StartTool() {
     PrintTitle();
 
-    setTimeout(() => {
-        PromptCommand();
-    }, 250);
+    await setTimeout(250);
+    PromptCommand();
 };
 
 export async function RestartTool() {
-    setTimeout(async () => {
+    try {
+        await setTimeout(800);
         const restartTool = await confirm({ message: "Would you like to anything else?" });
 
         if (restartTool) {
             StartTool();
         };
-    }, 1000);
+    } catch(err) {
+        process.exit(0);
+    };
 };
 
 async function PromptCommand() {
     try {
-        const answer = await select({ message: "What would you like to do?", choices: commandList});
+        const answer = await select({ message: "What would you like to do?", choices: Object.keys(commandMap)});
 
         for (let command of Object.entries(commandMap)) {
             const cmdName = command[0];
@@ -48,9 +45,8 @@ async function PromptCommand() {
             if (answer === cmdName) {
                 PrintTitle();
 
-                setTimeout(() => {
-                    cmdFunction.execute();
-                }, 250);
+                await setTimeout(250);
+                cmdFunction.execute();
                 return;
             };
         };

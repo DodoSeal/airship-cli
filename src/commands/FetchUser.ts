@@ -12,6 +12,7 @@ const apiMap = {
 
 export const fetchUserCommand: CLICommand = {
     name: "fetch-user",
+    displayName: "Fetch User",
     description: "Returns data related to the specified user.",
     usage: "fetch-user <method: username | userId> <identifier: string>",
     requiresToken: false,

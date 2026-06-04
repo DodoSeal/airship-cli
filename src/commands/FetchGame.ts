@@ -12,6 +12,7 @@ const apiMap = {
 
 export const fetchGameCommand: CLICommand = {
     name: "fetch-game",
+    displayName: "Fetch Game",
     description: "Returns data related to the specified game.",
     usage: "fetch-game <method: slug | gameId> <identifier: string>",
     requiresToken: false,
