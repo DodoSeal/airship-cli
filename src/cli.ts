@@ -10,13 +10,6 @@ import { setTimeout } from 'node:timers/promises';
 import { FetchProfilePhotoCommand } from './commands/FetchProfilePhoto.js';
 import type { CLICommand } from './commands/CommandTypes.js';
 
-// export const commandMap = {
-//     "Help": helpCommand,
-//     "Fetch User": fetchUserCommand,
-//     "Fetch User Photo": FetchUserPhotoCommand,
-//     "Fetch Game": fetchGameCommand
-// };
-
 interface CommandMap {
     [key: string]: {
         [key: string]: CLICommand
