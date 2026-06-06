@@ -19,11 +19,6 @@ export const fetchGameCommand: CLICommand = {
     usage: "fetch-game <method: slug | gameId> <identifier: string>",
     requiresToken: false,
     execute: async () => {
-        console.clear();
-        PrintHeader("Fetch Game");
-
-        await setTimeout(250);
-
         const fetchMethod = await select({ message: "Which method would you like to use?", choices: [
             "Slug",
             "GameId"

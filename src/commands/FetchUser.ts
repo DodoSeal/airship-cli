@@ -19,11 +19,6 @@ export const fetchUserCommand: CLICommand = {
     usage: "fetch-user <method: username | userId> <identifier: string>",
     requiresToken: false,
     execute: async () => {
-        console.clear();
-        PrintHeader("Fetch User");
-
-        await setTimeout(250);
-
         const fetchMethod = await select({ message: "Which method would you like to use?", choices: [
             "Username",
             "UserId"
