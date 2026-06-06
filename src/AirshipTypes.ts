@@ -8,9 +8,9 @@ export type AirshipUser = {
         uid: string,
         username: string,
         usernameLower: string,
-        statusText: string,
-        profileImageId: string,
-        lastOnlineTime: string
+        statusText?: string,
+        profileImageId?: string,
+        lastOnlineTime?: string
     }
 };
 
