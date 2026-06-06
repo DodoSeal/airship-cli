@@ -46,6 +46,7 @@ export async function RestartTool() {
             StartTool();
         };
     } catch(err) {
+        console.error(err);
         process.exit(0);
     };
 };
@@ -65,6 +66,7 @@ async function PromptCommand() {
             };
         };
     } catch(err) {
+        console.error(err);
         process.exit(0);
     };
 };
@@ -86,10 +88,10 @@ async function HandleCommand(command: CLICommand, answer: string) {
     };
 };
 
-process.on("exit", (signal) => {
-    if (signal === 0) {
-        console.clear();
-    };
-});
+// process.on("exit", (signal) => {
+//     if (signal === 0) {
+//         console.clear();
+//     };
+// });
 
 StartTool();
