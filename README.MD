@@ -1,12 +1,24 @@
 # Airship CLI
 Interact with the Airship.gg API from your Terminal!
 
+![CLI Demo](https://github.com/DodoSeal/airship-cli/blob/master/media/demo-gif.gif?raw=true)
+
 ## How to Use
 Simply install the NPM Package
 
 `npm install -g airship-cli`
 
 and run the command, `airship`!
+
+## Current Commands
+*Note: Some commands (marked below) require an [Airship Installation](https://store.steampowered.com/app/2381730/Airship/) for the authentication token!*
+
+Users:
+- Fetch User
+- Fetch Profile Picture (returns CDN path)
+
+Games:
+- Fetch Game
 
 # Development Stats
 ![Airship CLI - Hackatime Tracker](https://hackatime.hackclub.com/api/v1/badge/U0B7SE5AGTU/Soarin-Games/airship-cli)
