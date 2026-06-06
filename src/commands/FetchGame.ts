@@ -29,13 +29,11 @@ export const fetchGameCommand: CLICommand = {
         
         switch(dataType) {
             case "Simple":
-                const userData = (result as AirshipGame).game;
-
-                console.log(`\n${chalk.green("Game Id")}: ${userData.id}`);
-                console.log(`${chalk.green("Name")}: ${userData.name}`);
-                console.log(`${chalk.green("Slug")}: ${userData.slug || ""}`);
-                console.log(`${chalk.green("Developer")}: ${userData.organization.name}`);
-                console.log(`${chalk.green("Description")}: ${userData.description || ""}\n`);
+                console.log(`\n${chalk.green("Game Id")}: ${game.id}`);
+                console.log(`${chalk.green("Name")}: ${game.name}`);
+                console.log(`${chalk.green("Slug")}: ${game.slug || ""}`);
+                console.log(`${chalk.green("Developer")}: ${game.organization.name}`);
+                console.log(`${chalk.green("Description")}: ${game.description || ""}\n`);
                 break;
             case "Verbose":
                 console.dir(result, { depth: null });
