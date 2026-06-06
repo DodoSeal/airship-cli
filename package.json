@@ -11,7 +11,8 @@
   ],
   "type": "module",
   "scripts": {
-    "tsc": "tsc --w"
+    "tsc": "tsc --w",
+    "publish": "npm ci && npm publish"
   },
   "author": "Max McDaniel",
   "license": "ISC",
