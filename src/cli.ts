@@ -9,6 +9,7 @@ import { fetchGameCommand } from './commands/FetchGame.js';
 import { setTimeout } from 'node:timers/promises';
 import { FetchProfilePhotoCommand } from './commands/FetchProfilePhoto.js';
 import type { CLICommand } from './commands/CommandTypes.js';
+import { favoriteGameCommand } from './commands/FavoriteGame.js';
 
 interface CommandMap {
     [key: string]: {
@@ -26,7 +27,8 @@ export const commandMap: CommandMap = {
         "Fetch Profile Photo": FetchProfilePhotoCommand
     },
     "Games": {
-        "Fetch Game": fetchGameCommand
+        "Fetch Game": fetchGameCommand,
+        "Favorite Game": favoriteGameCommand
     }
 };
 
