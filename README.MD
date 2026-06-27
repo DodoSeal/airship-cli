@@ -19,7 +19,7 @@ Users:
 
 Games:
 - Fetch Game
-- Favorite Game
+- Favorite Game *(auth)*
 
 # Development Stats
 ![Airship CLI - Hackatime Tracker](https://hackatime.hackclub.com/api/v1/badge/U0B7SE5AGTU/Soarin-Games/airship-cli)
