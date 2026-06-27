@@ -74,25 +74,24 @@ async function PromptCommand() {
 
         for (let [ categoryName, commands ] of cmdCategories) {
             // Handle special exceptions for commands in default category
-            if (categoryName !== "default") {
-                commands["Back"] = restartCommand;
-                return;
-            };
+            if (categoryName === "default") {
+                if (categoryAnswer === "Help") {
+                    helpCommand.execute();
+                    continue;
+                };
 
-            if (categoryAnswer === "Help") {
-                helpCommand.execute();
-                return;
-            };
-
-            if (categoryAnswer === "Exit") {
-                exitCommand.execute();
-                return;
+                if (categoryAnswer === "Exit") {
+                    exitCommand.execute();
+                    continue;
+                };
             };
 
             if (categoryAnswer === categoryName) {
+                commands["Back"] = restartCommand;
                 const cmdAnswer = await select({ message: "What would you like to do?", choices: Object.keys(commands) });
 
                 HandleCommand(commands[cmdAnswer]!, cmdAnswer);
+                return;
             };
         };
     } catch(err) {
@@ -118,10 +117,12 @@ async function HandleCommand(command: CLICommand, answer: string) {
     };
 };
 
-// process.on("exit", (signal) => {
-//     if (signal === 0) {
-//         console.clear();
-//     };
-// });
+process.on("exit", (signal) => {
+    if (signal === 0) {
+        console.clear();
+    };
+});
+
+process.on("SIGINT", (signal) => {});
 
 StartTool();
