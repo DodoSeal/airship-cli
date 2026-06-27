@@ -3,28 +3,34 @@
 import { confirm, input, select } from '@inquirer/prompts';
 import { PrintHeader, PrintError, PrintTitle } from './util/Styles.js';
 import { AirshipToken } from './util/TokenManager.js';
-import { helpCommand } from './commands/Help.js';
-import { fetchUserCommand } from './commands/FetchUser.js';
-import { fetchGameCommand } from './commands/FetchGame.js';
+import { helpCommand } from './commands/HelpCommand.js';
+import { fetchUserCommand } from './commands/users/FetchUser.js';
+import { fetchGameCommand } from './commands/games/FetchGame.js';
 import { setTimeout } from 'node:timers/promises';
-import { FetchProfilePhotoCommand } from './commands/FetchProfilePhoto.js';
+import { fetchProfilePhotoCommand } from './commands/users/FetchProfilePhoto.js';
 import type { CLICommand } from './commands/CommandTypes.js';
-import { favoriteGameCommand } from './commands/FavoriteGame.js';
+import { favoriteGameCommand } from './commands/games/FavoriteGame.js';
+import { restartCommand } from './commands/RestartCommand.js';
+import { exitCommand } from './commands/ExitCommand.js';
 
 interface CommandMap {
+    "default": {
+        [key: string]: CLICommand
+    },
+
     [key: string]: {
         [key: string]: CLICommand
     }
 };
 
-// TODO: Make default category
 export const commandMap: CommandMap = {
-    /* "default": {
-        "Help": helpCommand
-    }, */
+    "default": {
+        "Help": helpCommand,
+        "Exit": exitCommand
+    },
     "Users": {
         "Fetch User": fetchUserCommand,
-        "Fetch Profile Photo": FetchProfilePhotoCommand
+        "Fetch Profile Photo": fetchProfilePhotoCommand
     },
     "Games": {
         "Fetch Game": fetchGameCommand,
@@ -55,11 +61,33 @@ export async function RestartTool() {
 
 async function PromptCommand() {
     try {
-        const categoryAnswer = await select({ message: "Select a command category:", choices: Object.keys(commandMap)});
+        // Remove "default" from choices
+        let choices: string[] = Object.keys(commandMap).slice(1);
+
+        // Readd the default commands yay!
+        for (let defaultCmd of Object.keys(commandMap.default)) {
+            choices.push(defaultCmd);
+        };
+
+        const categoryAnswer = await select({ message: "What would you like to do?", choices});
         const cmdCategories = Object.entries(commandMap);
 
         for (let [ categoryName, commands ] of cmdCategories) {
-            // TODO: Make back command
+            // Handle special exceptions for commands in default category
+            if (categoryName !== "default") {
+                commands["Back"] = restartCommand;
+                return;
+            };
+
+            if (categoryAnswer === "Help") {
+                helpCommand.execute();
+                return;
+            };
+
+            if (categoryAnswer === "Exit") {
+                exitCommand.execute();
+                return;
+            };
 
             if (categoryAnswer === categoryName) {
                 const cmdAnswer = await select({ message: "What would you like to do?", choices: Object.keys(commands) });
