@@ -1,9 +1,9 @@
-import type { CLICommand } from "./CommandTypes.js";
+import type { CLICommand } from "../CommandTypes.js";
 import { input, select } from '@inquirer/prompts';
-import { PrintError } from '../util/Styles.js';
-import { RestartTool } from "../cli.js";
+import { PrintError } from '../../util/Styles.js';
+import { RestartTool } from "../../cli.js";
 import chalk from "chalk";
-import { FetchUser, userApiMap } from "../util/platform/FetchUser.js";
+import { FetchUser, userApiMap } from "../../util/platform/FetchUser.js";
 
 export const fetchUserCommand: CLICommand = {
     name: "fetch-user",

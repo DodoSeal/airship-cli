@@ -1,9 +1,9 @@
-import type { CLICommand } from "./CommandTypes.js";
+import type { CLICommand } from "../CommandTypes.js";
 import { input, select } from '@inquirer/prompts';
-import type { AirshipError, AirshipGame } from "../AirshipTypes.js";
-import { RestartTool } from "../cli.js";
-import { FetchGame, gameApiMap } from "../util/platform/FetchGame.js";
-import { PrintError } from "../util/Styles.js";
+import type { AirshipError, AirshipGame } from "../../AirshipTypes.js";
+import { RestartTool } from "../../cli.js";
+import { FetchGame, gameApiMap } from "../../util/platform/FetchGame.js";
+import { PrintError } from "../../util/Styles.js";
 import chalk from "chalk";
 
 export const fetchGameCommand: CLICommand = {

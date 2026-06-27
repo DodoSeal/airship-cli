@@ -1,15 +1,15 @@
-import type { CLICommand } from "./CommandTypes.js";
-import { PrintError } from "../util/Styles.js";
+import type { CLICommand } from "../CommandTypes.js";
+import { PrintError } from "../../util/Styles.js";
 import { input, select } from "@inquirer/prompts";
 import chalk from "chalk";
-import { RestartTool } from "../cli.js";
-import { FetchUser, userApiMap } from "../util/platform/FetchUser.js";
+import { RestartTool } from "../../cli.js";
+import { FetchUser, userApiMap } from "../../util/platform/FetchUser.js";
 
-export const FetchProfilePhotoCommand: CLICommand = {
+export const fetchProfilePhotoCommand: CLICommand = {
     name: "fetch-profile-photo",
     displayName: "Fetch Profile Photo",
     description: "Returns the profile picture of the given user.",
-    usage: "<method: username | userId> <identifier: string>",
+    usage: "fetch-profile-photo <method: username | userId> <identifier: string>",
     requiresToken: false,
     execute: async () => {
         const fetchMethod = await select({ message: "Which method would you like to use?", choices: Object.keys(userApiMap)});
