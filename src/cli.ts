@@ -12,6 +12,7 @@ import type { CLICommand } from './commands/CommandTypes.js';
 import { favoriteGameCommand } from './commands/games/FavoriteGame.js';
 import { restartCommand } from './commands/RestartCommand.js';
 import { exitCommand } from './commands/ExitCommand.js';
+import { fetchAuthTokenCommand } from './commands/users/FetchAuthToken.js';
 
 interface CommandMap {
     "default": {
@@ -30,7 +31,8 @@ export const commandMap: CommandMap = {
     },
     "Users": {
         "Fetch User": fetchUserCommand,
-        "Fetch Profile Photo": fetchProfilePhotoCommand
+        "Fetch Profile Photo": fetchProfilePhotoCommand,
+        "Fetch Auth Token": fetchAuthTokenCommand
     },
     "Games": {
         "Fetch Game": fetchGameCommand,
@@ -69,7 +71,7 @@ async function PromptCommand() {
             choices.push(defaultCmd);
         };
 
-        const categoryAnswer = await select({ message: "What would you like to do?", choices});
+        const categoryAnswer = await select({ message: "What would you like to do?", choices });
         const cmdCategories = Object.entries(commandMap);
 
         for (let [ categoryName, commands ] of cmdCategories) {
@@ -124,5 +126,16 @@ process.on("exit", (signal) => {
 });
 
 process.on("SIGINT", (signal) => {});
+
+// Experiment with custom arguments for a standard CLI experience
+
+// const args = process.argv.slice(2).map((argument) => argument.toLowerCase());
+// for (let commandLists of Object.values(commandMap)) {
+//     for (let [ commandName, command ] of Object.entries(commandLists)) {
+//         if (args.includes(command.name.toLowerCase())) {
+//             command.execute();
+//         };
+//     };
+// };
 
 StartTool();
