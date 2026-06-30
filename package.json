@@ -1,6 +1,6 @@
 {
   "name": "airship-cli",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "A CLI Tool to interact with Airship's API endpoints.",
   "main": "out/cli.js",
   "bin": {
