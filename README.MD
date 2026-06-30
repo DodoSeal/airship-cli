@@ -16,6 +16,9 @@ and run the command, `airship`!
 Users:
 - Fetch User
 - Fetch Profile Picture (returns CDN path)
+- Fetch Auth Token *(auth)*
+- Fetch Username Availability *(auth)*
+- Update Status Text *(auth)*
 
 Games:
 - Fetch Game
