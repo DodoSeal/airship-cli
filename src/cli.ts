@@ -13,6 +13,7 @@ import { favoriteGameCommand } from './commands/games/FavoriteGame.js';
 import { restartCommand } from './commands/RestartCommand.js';
 import { exitCommand } from './commands/ExitCommand.js';
 import { fetchAuthTokenCommand } from './commands/users/FetchAuthToken.js';
+import { fetchUsernameAvailabilityCommand } from './commands/users/FetchUsernameAvailability.js';
 
 interface CommandMap {
     "default": {
@@ -32,7 +33,8 @@ export const commandMap: CommandMap = {
     "Users": {
         "Fetch User": fetchUserCommand,
         "Fetch Profile Photo": fetchProfilePhotoCommand,
-        "Fetch Auth Token": fetchAuthTokenCommand
+        "Fetch Auth Token": fetchAuthTokenCommand,
+        "Fetch Username Availability": fetchUsernameAvailabilityCommand
     },
     "Games": {
         "Fetch Game": fetchGameCommand,
