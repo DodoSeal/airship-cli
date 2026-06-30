@@ -79,3 +79,9 @@ export interface AccessTokenError {
         status: string
     }
 };
+
+export interface UpdateUserDTO {
+    username?: string,
+    statusText?: string | undefined,
+    profileImageId?: string | undefined
+};
